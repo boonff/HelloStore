@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { config } from '../../config/index';
 
-/** 获取搜索历史 */
+// TODO: 统一import风格
+/** 获取搜索结果 */
 function mockSearchResult(params) {
   const { delay } = require('../_utils/delay');
   const { getSearchResult } = require('../../model/search');
@@ -27,7 +28,7 @@ function mockSearchResult(params) {
   });
 }
 
-/** 获取搜索历史 */
+/** 获取搜索结果 */
 export function getSearchResult(params) {
   if (config.useMock) {
     return mockSearchResult(params);
