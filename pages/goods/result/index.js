@@ -30,6 +30,7 @@ Page({
 
   onLoad(options) {
     const { searchValue = '' } = options || {};
+    console.log(`搜索结果：${searchValue}`); 
     this.setData(
       {
         keywords: searchValue,
