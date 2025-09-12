@@ -1,4 +1,4 @@
-import { getGoodsList } from './goods';
+import { getMockGoodsList } from './goods';
 import { searchGoods } from '../utils/api/goods';
 
 /**
@@ -55,7 +55,7 @@ export function getMockSearchResult() {
     pageNum: 1,
     pageSize: 30,
     totalCount: 1,
-    spuList: getGoodsList(7),
+    spuList: getMockGoodsList(7),
     algId: 0,
   };
 }

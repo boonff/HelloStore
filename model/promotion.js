@@ -1,8 +1,8 @@
-import { getGoodsList } from './goods';
+import { getMockGoodsList } from './goods';
 
 export function getPromotion(baseID = 0, length = 10) {
   return {
-    list: getGoodsList(baseID, length).map((item) => {
+    list: getMockGoodsList(baseID, length).map((item) => {
       return {
         spuId: item.spuId,
         thumb: item.primaryImage,
