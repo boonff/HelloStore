@@ -1,16 +1,12 @@
-export const goodsApi = (keyword = '') => {
+export const searchGoods = (keyword = '') => {
     return new Promise((resolve, reject) => {
         wx.request({
             url: `http://10.0.0.210:8080/goods/search?keyword=${encodeURIComponent(keyword)}`,
             method: 'GET',
             success: (res) => {
                 if (Array.isArray(res.data)) {
-                    // 给每个商品加上 thumb
-                    const dataWithThumb = res.data.map(item => ({
-                        ...item,
-                        thumb: item.primaryImage || '', // 如果没有 primaryImage 就空字符串
-                    }));
-                    resolve(dataWithThumb);
+                    resolve(res.data);
+                    console.log('goodsApi 请求成功:', res.data); // <-- 打印返回的数据
                 } else {
                     resolve([]);
                     console.warn('goodsApi 返回的数据不是数组:', res.data); // <-- 打印警告

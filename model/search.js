@@ -1,4 +1,5 @@
 import { getGoodsList } from './goods';
+import { searchGoods } from '../utils/api/goods';
 
 /**
  * @param {number} sort
@@ -47,7 +48,7 @@ export function getSearchPopular() {
   };
 }
 
-export function getSearchResult() {
+export function getMockSearchResult() {
   return {
     saasId: null,
     storeId: null,
@@ -58,3 +59,20 @@ export function getSearchResult() {
     algId: 0,
   };
 }
+
+export function getSearchResult(params) {
+  return searchGoods(params.keyword).then((res) => {
+    return {
+      saasId: null,
+      storeId: null,
+      pageNum: params?.pageNum || 1,
+      pageSize: params?.pageSize || 30,
+      totalCount: res.length, // 真实数据条数
+      spuList: res,           // 真实返回的商品数组
+      algId: 0,
+    };
+  });
+}
+
+
+
