@@ -30,12 +30,12 @@ Page({
 
   onLoad(options) {
     const { searchValue = '' } = options || {};
-    console.log(`搜索结果：${searchValue}`); 
     this.setData(
       {
         keywords: searchValue,
       },
       () => {
+        console.log('搜索关键词：', this.data.keywords);
         this.init(true);
       },
     );
@@ -79,8 +79,10 @@ Page({
       loadMoreStatus: 1,
       loading: true,
     });
+    console.log('搜索参数：', params);
     try {
       const result = await getSearchResult(params);
+      console.log('搜索结果：', result);
       const code = 'Success';
       const data = result;
       if (code.toUpperCase() === 'SUCCESS') {

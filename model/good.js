@@ -1887,6 +1887,7 @@ export function genGood(id, available = 1) {
 		return allGoods.filter((good) => good.spuId === id)[0];
 	}
 	const item = allGoods[id % allGoods.length];
+	console.log('genGood(); item', item);
 	return {
 		...item,
 		spuId: `${id}`,
