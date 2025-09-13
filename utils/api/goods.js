@@ -21,15 +21,17 @@ export const searchGoods = (keyword = '') => {
     });
 };
 
-export const getGoods = () => {
+export const getGoods = (pageIndex = 0, pageSize = 0) => {
     return new Promise((resolve, reject) => {
         wx.request({
-            url: `http://10.0.0.210:8080/goods`,
+            url: `http://10.0.0.210:8080/goods/range?pageIndex=${pageIndex}&pageSize=${pageSize}`,
             method: 'GET',
             success: (res) => {
                 if (Array.isArray(res.data)) {
                     resolve(res.data);
-                    console.log('getGoods 请求成功:', res.data); // <-- 打印返回的数据
+                    console.log('pageindex', pageIndex)
+                    console.log('pagesize', pageSize)
+                    console.log('getGoods res', res.data); // <-- 打印返回的数据
                 } else {
                     resolve([]);
                     console.warn('getGoods 返回的数据不是数组:', res.data); // <-- 打印警告
