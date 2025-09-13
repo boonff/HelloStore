@@ -18,7 +18,7 @@ function mockFetchGoodsList(pageIndex = 1, pageSize = 20) {
     );
 }
 
-async function realFetchGoodsList(pageIndex = 1, pageSize = 20) {
+async function realFetchGoodsList(pageIndex = 0, pageSize = 20) {
     const { getGoodsList } = require('../../model/goods');
     return await getGoodsList(pageIndex, pageSize).then((list) => {
         return list.map((item) => ({
@@ -33,7 +33,7 @@ async function realFetchGoodsList(pageIndex = 1, pageSize = 20) {
 }
 
 /** 获取商品列表 */
-export function fetchGoodsList(pageIndex = 1, pageSize = 20) {
+export function fetchGoodsList(pageIndex = 0, pageSize = 20) {
     if (false) {
         return mockFetchGoodsList(pageIndex, pageSize);
     }
