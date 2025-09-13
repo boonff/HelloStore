@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { config } from '../../config/index';
-import { searchGoods } from '../../utils/api/goods';
+import { searchGoodsApi } from '../../utils/api/goods';
 
 // TODO: 统一import风格
 /** 获取搜索结果 */

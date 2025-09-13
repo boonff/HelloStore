@@ -1,5 +1,5 @@
 import { getMockGoodsList } from './goods';
-import { searchGoods } from '../utils/api/goods';
+import { searchGoodsApi } from '../utils/api/goods';
 
 /**
  * @param {number} sort
@@ -61,7 +61,7 @@ export function getMockSearchResult() {
 }
 
 export function getSearchResult(params) {
-  return searchGoods(params.keyword).then((res) => {
+  return searchGoodsApi(params.keyword).then((res) => {
     return {
       saasId: null,
       storeId: null,
