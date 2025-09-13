@@ -11,8 +11,8 @@ export function getMockGoodsList(baseID = 0, length = 10) {
     return data;
 }
 
-export function getGoodsList(baseID = 0, length = 10) {
-    return getGoods()
+export function getGoodsList(pageIndex = 0, pageSize = 10) {
+    return getGoods(pageIndex, pageSize)
 }
 
 
