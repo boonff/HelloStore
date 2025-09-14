@@ -336,14 +336,13 @@ Page({
         });
     },
 
-    async getCommentsList() {
+    async getCommentsList(spuId) {
         try {
             const code = 'Success';
-            const data = await getGoodsDetailsCommentList();
-            const { homePageComments } = data;
+            const comments = await getGoodsDetailsCommentList(spuId);
             if (code.toUpperCase() === 'SUCCESS') {
                 const nextState = {
-                    commentsList: homePageComments.map((item) => {
+                    commentsList: comments.map((item) => {
                         return {
                             goodsSpu: item.spuId,
                             userName: item.userName || '',
@@ -410,9 +409,7 @@ Page({
 
     onLoad(query) {
         const { spuId } = query;
-        this.setData({
-            spuId: spuId,
-        });
+        this.setData({ spuId: spuId });
         this.getDetail(spuId);
         this.getCommentsList(spuId);
         this.getCommentsStatistics(spuId);
