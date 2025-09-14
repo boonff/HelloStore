@@ -36,16 +36,11 @@ Page({
         this.getCount(options);
         this.getComments(options);
     },
+
     async getCount(options) {
         try {
-            const result = await fetchCommentsCount(
-                {
-                    spuId: options.spuId,
-                },
-                {
-                    method: 'POST',
-                },
-            );
+            const result = await fetchCommentsCount(options.spuId,);
+            console.log('fetchCommentsCount result', result);
             this.setData({
                 countObj: result,
             });
@@ -68,7 +63,7 @@ Page({
     generalQueryData(reset) {
         const { hasImage, pageNum, pageSize, spuId, commentLevel } = this.data;
         const params = {
-            pageNum: 1,
+            pageNum: 0,
             pageSize: 30,
             queryParameter: {
                 spuId,
@@ -100,55 +95,37 @@ Page({
         const { loadMoreStatus, commentList = [] } = this.data;
         const params = this.generalQueryData(reset);
 
-        // 在加载中或者无更多数据，直接返回
         if (loadMoreStatus !== 0) return;
 
-        this.setData({
-            loadMoreStatus: 1,
-        });
+        this.setData({ loadMoreStatus: 1 });
 
         try {
-            const data = await fetchComments(params, {
-                method: 'POST',
-            });
-            const code = 'SUCCESS';
-            if (code.toUpperCase() === 'SUCCESS') {
-                const { pageList, totalCount = 0 } = data;
+            const data = await fetchComments(params); // 这里接收 Promise
+            if (Array.isArray(data)) {
+                const pageList = data;
                 pageList.forEach((item) => {
-                    // eslint-disable-next-line no-param-reassign
-                    item.commentTime = dayjs(Number(item.commentTime)).format(
-                        'YYYY/MM/DD HH:mm',
-                    );
+                    item.commentTime = dayjs(Number(item.commentTime)).format('YYYY/MM/DD HH:mm');
                 });
-
-                if (Number(totalCount) === 0 && reset) {
-                    this.setData({
-                        commentList: [],
-                        hasLoaded: true,
-                        total: totalCount,
-                        loadMoreStatus: 2,
-                    });
-                    return;
-                }
                 const _commentList = reset ? pageList : commentList.concat(pageList);
-                const _loadMoreStatus =
-                    _commentList.length === Number(totalCount) ? 2 : 0;
+                const _loadMoreStatus = _commentList.length === pageList.length ? 2 : 0;
+
                 this.setData({
                     commentList: _commentList,
                     pageNum: params.pageNum || 1,
-                    totalCount: Number(totalCount),
+                    totalCount: pageList.length,
                     loadMoreStatus: _loadMoreStatus,
+                    hasLoaded: true,
                 });
             } else {
-                wx.showToast({
-                    title: '查询失败，请稍候重试',
-                });
+                this.setData({ hasLoaded: true });
             }
-        } catch (error) { }
-        this.setData({
-            hasLoaded: true,
-        });
+        } catch (error) {
+            console.error('fetchComments 请求失败:', error);
+            wx.showToast({ title: '网络错误', icon: 'error' });
+            this.setData({ hasLoaded: true });
+        }
     },
+
 
     getScoreArray(score) {
         var array = [];
