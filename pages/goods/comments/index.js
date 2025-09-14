@@ -187,7 +187,7 @@ Page({
                 myLoadStatus: 1,
                 commentType: commenttype,
             });
-            this.getMyCommentsList();
+            this.getMyCommentsList(); //TODO 未定义的方法
         } else {
             this.setData({
                 myLoadStatus: 0,
