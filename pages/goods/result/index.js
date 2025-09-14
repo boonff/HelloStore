@@ -173,6 +173,7 @@ Page({
     gotoGoodsDetail(e) {
         const { index } = e.detail;
         const { spuId } = this.data.goodsList[index];
+        console.log('跳转商品详情，spuId=', spuId);
         wx.navigateTo({
             url: `/pages/goods/details/index?spuId=${spuId}`,
         });
