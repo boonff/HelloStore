@@ -1,7 +1,8 @@
-export function getCommentsBySpuIdApi(spuId = 0) {
+export function getCommentsDetail(spuId = 0, pageIndex = 0, pageSize = 10, hasImage = false, commentLevel = 0) {
     return new Promise((resolve, reject) => {
+        console.log('getCommentsDetail params', { spuId, pageIndex, pageSize, hasImage, commentLevel });
         wx.request({
-            url: `http://10.0.0.210:8080/comments/${spuId}`,
+            url: `http://10.0.0.210:8080/comments/detail?spuId=${spuId}&pageIndex=${pageIndex}&pageSize=${pageSize}&hasImage=${hasImage}&commentLevel=${commentLevel}`,
             method: 'GET',
             success: (res) => {
                 if (Array.isArray(res.data)) {

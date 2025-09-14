@@ -9,6 +9,12 @@ function mockQueryCommentDetail(params) {
   });
 }
 
+function realQueryCommentDetail(params) {
+  return new Promise((resolve) => {
+    resolve('real api');
+  });
+}
+
 /** 获取评价详情 */
 export function getCommentDetail(params) {
   if (config.useMock) {
