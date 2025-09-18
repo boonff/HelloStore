@@ -30,14 +30,19 @@ Page({
     init() {
         this.fetchData();
     },
-    fetchData() {
-        fetchPerson().then((personInfo) => {
+    async fetchData() {
+        try {
+            const personInfo = await fetchPerson()
+            console.log('获取个人信息成功', personInfo)
             this.setData({
                 personInfo,
                 'personInfo.phoneNumber': phoneEncryption(personInfo.phoneNumber),
-            });
-        });
-    },
+            })
+        } catch (err) {
+            console.error('获取个人信息失败', err)
+        }
+    }
+    ,
     onClickCell({ currentTarget }) {
         const { dataset } = currentTarget;
         const { nickName } = this.data.personInfo;
