@@ -1,0 +1,39 @@
+<view class="container">
+    <view class="title">注册</view>
+
+    <view class="input-group">
+        <text>用户名</text>
+        <input type="text" placeholder="请输入用户名" bindinput="onUsernameInput" />
+    </view>
+
+    <view class="input-group">
+        <text>密码</text>
+        <input type="password" placeholder="请输入密码" bindinput="onPasswordInput" />
+    </view>
+
+    <view class="input-group">
+        <text>手机号</text>
+        <input type="text" placeholder="请输入手机号" bindinput="onPhoneInput" />
+    </view>
+
+    <view class="input-group">
+        <text>昵称</text>
+        <input type="text" placeholder="请输入昵称" bindinput="onNickNameInput" />
+    </view>
+
+    <view class="input-group">
+        <text>用户类型</text>
+        <picker mode="selector" range="{{userTypes}}" bindchange="onUserTypeChange">
+            <view class="picker">
+                {{userType}}
+            </view>
+        </picker>
+    </view>
+
+    <button bindtap="handleRegister" class="register-btn">注册</button>
+
+    <view class="switch">
+        <text>已有账号？</text>
+        <navigator url="/pages/login/login">去登录</navigator>
+    </view>
+</view>
