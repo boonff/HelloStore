@@ -50,3 +50,8 @@ export const genUsercenter = () => ({
   orderTagInfos,
   customerServiceInfo,
 });
+
+export function getUserInfo() {
+  const { getUserInfoApi } = require('../utils/api/user');
+  return getUserInfoApi();
+}
