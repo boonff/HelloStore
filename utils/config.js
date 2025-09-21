@@ -22,5 +22,5 @@ export const URL_API = {
     UserInfo: `${BASE_URL}/user/info`,
 
     AppConfig: `${BASE_URL}/api/config`,
-    CustomerServiceCONFIG: `${BASE_URL}/api/config/customerService`
+    CustomerServiceConfig: `${BASE_URL}/api/config/customerService`
 }
