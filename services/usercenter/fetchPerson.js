@@ -21,10 +21,21 @@ function mockFetchPerson() {
 /** 获取个人中心信息 */
 export async function fetchPerson() {
     try {
-        const res = await getUserInfo()
-        return res.data
+        // 如果使用 mock 数据
+        if (false) {
+            return mockFetchPerson()
+        } else {
+            const res = await getUserInfo()
+            // 如果返回 null 或格式不对，返回默认对象
+            if (res && res.id) {
+                return res
+            } else {
+                console.warn('fetchPerson 返回数据无效:', res)
+                return { id: 'null', username: 'null', phoneNumber: 'null', nickName: 'null' }
+            }
+        }
     } catch (err) {
-        console.error('获取个人信息失败', err)
-        throw err
+        console.error('fetchPerson 请求失败:', err)
+        return { id: 'null', username: 'null', phoneNumber: 'null', nickName: 'null' }
     }
 }

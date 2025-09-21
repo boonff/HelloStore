@@ -31,18 +31,13 @@ Page({
         this.fetchData();
     },
     async fetchData() {
-        try {
-            const personInfo = await fetchPerson()
-            console.log('获取个人信息成功', personInfo)
-            this.setData({
-                personInfo,
-                'personInfo.phoneNumber': phoneEncryption(personInfo.phoneNumber),
-            })
-        } catch (err) {
-            console.error('获取个人信息失败', err)
-        }
-    }
-    ,
+        const personInfo = await fetchPerson()
+        this.setData({
+            personInfo,
+            'personInfo.phoneNumber': phoneEncryption(personInfo.phoneNumber),
+        })
+    },
+
     onClickCell({ currentTarget }) {
         const { dataset } = currentTarget;
         const { nickName } = this.data.personInfo;
