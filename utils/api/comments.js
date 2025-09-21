@@ -1,69 +1,78 @@
-export function getCommentsDetail(spuId = 0, pageIndex = 0, pageSize = 10, hasImage = false, commentLevel = 0) {
-    return new Promise((resolve, reject) => {
-        console.log('getCommentsDetail params', { spuId, pageIndex, pageSize, hasImage, commentLevel });
-        wx.request({
-            url: `http://10.0.0.210:8080/comments/detail?spuId=${spuId}&pageIndex=${pageIndex}&pageSize=${pageSize}&hasImage=${hasImage}&commentLevel=${commentLevel}`,
-            method: 'GET',
-            success: (res) => {
-                if (Array.isArray(res.data)) {
-                    resolve(res.data);
-                    console.log('getCommentsApi 请求成功:', res.data); // <-- 打印返回的数据
-                } else {
-                    resolve([]);
-                    console.warn('getCommentsApi 返回的数据不是数组:', res.data); // <-- 打印警告
-                }
-            },
-            fail: (err) => {
-                console.error('getCommentsApi 请求失败:', err); // <-- 打印错误
-                wx.showToast({ title: '网络错误', icon: 'error' });
-                reject(err);
-            }
-        });
-    });
+import { requestApi } from '../request.js'
+import { URL_API } from '../config.js'
+
+/**
+ * 获取评论详情
+ */
+export function getCommentsDetail(
+    spuId = 0,
+    pageIndex = 0,
+    pageSize = 10,
+    hasImage = false,
+    commentLevel = 0
+) {
+    return requestApi({
+        url: `${URL_API.COMMENTS_DETAIL}?spuId=${spuId}&pageIndex=${pageIndex}&pageSize=${pageSize}&hasImage=${hasImage}&commentLevel=${commentLevel}`,
+        method: 'GET'
+    }).then(res => {
+        if (Array.isArray(res)) {
+            console.log('getCommentsDetail 请求成功:', res)
+            return res
+        } else {
+            console.warn('getCommentsDetail 返回的数据不是数组:', res)
+            return []
+        }
+    }).catch(err => {
+        console.error('getCommentsDetail 请求失败:', err)
+        wx.showToast({ title: '网络错误', icon: 'error' })
+        throw err
+    })
 }
 
-export function getRandomTopCommentsApi(spuId = 0, randomSize = 5, selectSize = 2) {
-    return new Promise((resolve, reject) => {
-        wx.request({
-            url: `http://10.0.0.210:8080/comments/randomTopComments?spuId=${spuId}&randomSize=${randomSize}&selectSize=${selectSize}`,
-            method: 'GET',
-            success: (res) => {
-                if (Array.isArray(res.data)) {
-                    resolve(res.data);
-                    console.log('getCommentsApi 请求成功:', res.data); // <-- 打印返回的数据
-                } else {
-                    resolve([]);
-                    console.warn('getCommentsApi 返回的数据不是数组:', res.data); // <-- 打印警告
-                }
-            },
-            fail: (err) => {
-                console.error('getCommentsApi 请求失败:', err); // <-- 打印错误
-                wx.showToast({ title: '网络错误', icon: 'error' });
-                reject(err);
-            }
-        });
-    });
+/**
+ * 获取随机精选评论
+ */
+export function getRandomTopCommentsApi(
+    spuId = 0,
+    randomSize = 5,
+    selectSize = 2
+) {
+    return requestApi({
+        url: `${URL_API.RANDOM_TOP_COMMENTS}?spuId=${spuId}&randomSize=${randomSize}&selectSize=${selectSize}`,
+        method: 'GET'
+    }).then(res => {
+        if (Array.isArray(res)) {
+            console.log('getRandomTopCommentsApi 请求成功:', res)
+            return res
+        } else {
+            console.warn('getRandomTopCommentsApi 返回的数据不是数组:', res)
+            return []
+        }
+    }).catch(err => {
+        console.error('getRandomTopCommentsApi 请求失败:', err)
+        wx.showToast({ title: '网络错误', icon: 'error' })
+        throw err
+    })
 }
 
+/**
+ * 根据 spuId 获取评论统计
+ */
 export function getCommentsCountBySpuIdApi(spuId = 0) {
-    return new Promise((resolve, reject) => {
-        wx.request({
-            url: `http://10.0.0.210:8080/comments/count?spuId=${spuId}`,
-            method: 'GET',
-            success: (res) => {
-                if (res.data && typeof res.data === 'object') {
-                    resolve(res.data);
-                    console.log('getCommentsCountApi 请求成功:', res.data); // <-- 打印返回的数据
-                } else {
-                    resolve({});
-                    console.warn('getCommentsCountApi 返回的数据不是对象:', res.data); // <-- 打印警告
-                }
-            },
-            fail: (err) => {
-                console.error('getCommentsCountApi 请求失败:', err); // <-- 打印错误
-                wx.showToast({ title: '网络错误', icon: 'error' });
-                reject(err);
-            }
-        });
-    });
-}      
+    return requestApi({
+        url: `${URL_API.COMMENTS_COUNT}?spuId=${spuId}`,
+        method: 'GET'
+    }).then(res => {
+        if (res && typeof res === 'object') {
+            console.log('getCommentsCountBySpuIdApi 请求成功:', res)
+            return res
+        } else {
+            console.warn('getCommentsCountBySpuIdApi 返回的数据不是对象:', res)
+            return {}
+        }
+    }).catch(err => {
+        console.error('getCommentsCountBySpuIdApi 请求失败:', err)
+        wx.showToast({ title: '网络错误', icon: 'error' })
+        throw err
+    })
+}
