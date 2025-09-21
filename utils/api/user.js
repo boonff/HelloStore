@@ -3,7 +3,7 @@ import { URL_API } from '../config.js'
 
 export function getUserInfoApi() {
     return requestApi({
-        url: URL_API.USER_INFO,
+        url: URL_API.UserInfo,
         method: 'GET',
     }).then(res => {
         if (res && res.id) {

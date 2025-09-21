@@ -8,18 +8,19 @@ const BASE_URLS = {
 const BASE_URL = BASE_URLS[ENV]
 
 export const URL_API = {
-    COMMENTS_DETAIL: `${BASE_URL}/comments/detail`,
-    RANDOM_TOP_COMMENTS: `${BASE_URL}/comments/randomTopComments`,
-    COMMENTS_COUNT: `${BASE_URL}/comments/count`,
+    CommentsDetail: `${BASE_URL}/comments/detail`,
+    RandomTopComments: `${BASE_URL}/comments/randomTopComments`,
+    CommentsCount: `${BASE_URL}/comments/count`,
 
-    GOODS_SEARCH: `${BASE_URL}/goods/search`,
-    GOODS_RANGE: `${BASE_URL}/goods/range`,
-    GOODS_DETAIL: `${BASE_URL}/goods`,
+    GoodsSearch: `${BASE_URL}/goods/search`,
+    GoodsRange: `${BASE_URL}/goods/range`,
+    GoodsDetail: `${BASE_URL}/goods`,
 
-    AUTH_LOGIN: `${BASE_URL}/auth/login`,
-    AUTH_REGISTER: `${BASE_URL}/auth/register`,
+    AuthLogin: `${BASE_URL}/auth/login`,
+    AuthRegister: `${BASE_URL}/auth/register`,
 
-    USER_INFO: `${BASE_URL}/user/info`,
+    UserInfo: `${BASE_URL}/user/info`,
 
-    APP_CONFIG: `${BASE_URL}/config`,
+    AppConfig: `${BASE_URL}/api/config`,
+    CustomerServiceCONFIG: `${BASE_URL}/api/config/customerService`
 }

@@ -3,7 +3,7 @@ import { URL_API } from '../config'
 
 export function loginApi(username, password) {
     return requestApi({
-        url: URL_API.AUTH_LOGIN,
+        url: URL_API.AuthLogin,
         method: 'POST',
         data: { username, password }
     }).then(res => {
@@ -21,7 +21,7 @@ export function registerApi(
     userType
 ) {
     return requestApi({
-        url: URL_API.AUTH_REGISTER,
+        url: URL_API.AuthRegister,
         method: 'POST',
         data: { username, password, phoneNumber, nickName, userType }
     }).then(res => {

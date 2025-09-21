@@ -12,7 +12,7 @@ export function getCommentsDetail(
     commentLevel = 0
 ) {
     return requestApi({
-        url: `${URL_API.COMMENTS_DETAIL}?spuId=${spuId}&pageIndex=${pageIndex}&pageSize=${pageSize}&hasImage=${hasImage}&commentLevel=${commentLevel}`,
+        url: `${URL_API.CommentsDetail}?spuId=${spuId}&pageIndex=${pageIndex}&pageSize=${pageSize}&hasImage=${hasImage}&commentLevel=${commentLevel}`,
         method: 'GET'
     }).then(res => {
         if (Array.isArray(res)) {
@@ -38,7 +38,7 @@ export function getRandomTopCommentsApi(
     selectSize = 2
 ) {
     return requestApi({
-        url: `${URL_API.RANDOM_TOP_COMMENTS}?spuId=${spuId}&randomSize=${randomSize}&selectSize=${selectSize}`,
+        url: `${URL_API.RandomTopComments}?spuId=${spuId}&randomSize=${randomSize}&selectSize=${selectSize}`,
         method: 'GET'
     }).then(res => {
         if (Array.isArray(res)) {
@@ -60,7 +60,7 @@ export function getRandomTopCommentsApi(
  */
 export function getCommentsCountBySpuIdApi(spuId = 0) {
     return requestApi({
-        url: `${URL_API.COMMENTS_COUNT}?spuId=${spuId}`,
+        url: `${URL_API.CommentsCount}?spuId=${spuId}`,
         method: 'GET'
     }).then(res => {
         if (res && typeof res === 'object') {

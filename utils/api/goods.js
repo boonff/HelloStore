@@ -6,7 +6,7 @@ import { URL_API } from '../config.js'
  */
 export const searchGoodsApi = (keyword = '') => {
     return requestApi({
-        url: `${URL_API.GOODS_SEARCH}?keyword=${encodeURIComponent(keyword)}`,
+        url: `${URL_API.GoodsSearch}?keyword=${encodeURIComponent(keyword)}`,
         method: 'GET'
     }).then(res => {
         if (Array.isArray(res)) {
@@ -28,7 +28,7 @@ export const searchGoodsApi = (keyword = '') => {
  */
 export const getGoodsApi = (pageIndex = 0, pageSize = 0) => {
     return requestApi({
-        url: `${URL_API.GOODS_RANGE}?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+        url: `${URL_API.GoodsRange}?pageIndex=${pageIndex}&pageSize=${pageSize}`,
         method: 'GET'
     }).then(res => {
         if (Array.isArray(res)) {
@@ -50,7 +50,7 @@ export const getGoodsApi = (pageIndex = 0, pageSize = 0) => {
  */
 export const getGoodDetailApi = (spuId = 0) => {
     return requestApi({
-        url: `${URL_API.GOODS_DETAIL}/${spuId}`,
+        url: `${URL_API.GoodsDetail}/${spuId}`,
         method: 'GET'
     }).then(res => {
         if (res && res.spuId) {
