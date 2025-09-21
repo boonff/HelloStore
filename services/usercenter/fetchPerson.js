@@ -20,22 +20,18 @@ function mockFetchPerson() {
 
 /** 获取个人中心信息 */
 export async function fetchPerson() {
-    try {
-        // 如果使用 mock 数据
-        if (false) {
-            return mockFetchPerson()
+    // 如果使用 mock 数据
+    if (false) {
+        return mockFetchPerson()
+    } else {
+        const res = await getUserInfo()
+        // 如果返回 null 或格式不对，返回默认对象
+        if (res && res.id) {
+            return res
         } else {
-            const res = await getUserInfo()
-            // 如果返回 null 或格式不对，返回默认对象
-            if (res && res.id) {
-                return res
-            } else {
-                console.warn('fetchPerson 返回数据无效:', res)
-                return { id: 'null', username: 'null', phoneNumber: 'null', nickName: 'null' }
-            }
+            console.warn('fetchPerson 返回数据无效:', res)
+            return null
         }
-    } catch (err) {
-        console.error('fetchPerson 请求失败:', err)
-        return { id: 'null', username: 'null', phoneNumber: 'null', nickName: 'null' }
     }
+
 }
