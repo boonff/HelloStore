@@ -1,13 +1,19 @@
 {
     "pages": [
-        "pages/auth/login/login",
-        "pages/auth/register/register",
         "pages/home/home",
         "pages/category/index",
         "pages/cart/index",
         "pages/usercenter/index"
     ],
     "subpackages": [
+        {
+            "root": "pages/auth",
+            "name": "auth",
+            "pages": [
+                "login/login",
+                "register/register"
+            ]
+        },
         {
             "root": "pages/user",
             "name": "user",
