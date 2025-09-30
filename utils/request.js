@@ -10,6 +10,7 @@
 export function requestApi(options) {
     return new Promise((resolve, reject) => {
         const token = wx.getStorageSync('token'); // 自动带 token
+        console.log("requestApi token:", token)
         console.log('Request Options:', options); // 调试日志
         wx.request({
             url: options.url,
@@ -31,6 +32,44 @@ export function requestApi(options) {
             fail(err) {
                 reject(err);
             }
+        });
+    });
+}
+
+/**
+ * 通用文件上传接口
+ * @param {Object} options
+ * @param {string} options.url 上传地址
+ * @param {string} options.filePath 文件路径
+ * @param {string} options.name 文件字段名，后端要求的 form-data key
+ * @param {Object} [options.formData={}] 额外表单数据
+ * @param {Object} [options.header={}] 自定义 header
+ * @returns {Promise} 返回 Promise
+ */
+export function uploadApi(options) {
+    return new Promise((resolve, reject) => {
+        const token = wx.getStorageSync('token'); // 自动带 token
+        console.log("uploadApi token:", token)
+        wx.uploadFile({
+            url: options.url,
+            filePath: options.filePath,
+            name: options.name || 'file',
+            formData: options.formData || {},
+            header: Object.assign(
+                { 'Content-Type': 'application/json' },
+                options.header || {},
+                token ? { Authorization: `Bearer ${token}` } : {}
+            ),
+            success: (res) => {
+                try {
+                    console.log("uploadApi res:", res)
+                    const data = JSON.parse(res.data);
+                    resolve(data);
+                } catch (e) {
+                    reject({ errMsg: '服务器返回格式错误' });
+                }
+            },
+            fail: (err) => reject(err),
         });
     });
 }

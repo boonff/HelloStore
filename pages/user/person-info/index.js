@@ -1,7 +1,8 @@
 import { fetchPerson } from '../../../services/usercenter/fetchPerson';
 import { phoneEncryption } from '../../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
-
+import { uploadAvatar } from '../../../services/usercenter/uploadUserAvatar'
+import data from '../../../custom-tab-bar/data';
 Page({
     data: {
         personInfo: {
@@ -32,8 +33,9 @@ Page({
     },
     async fetchData() {
         const personInfo = await fetchPerson()
+        console.log("fetchData: personInfo:", personInfo)
         this.setData({
-            personInfo,
+            personInfo: personInfo,
             'personInfo.phoneNumber': phoneEncryption(personInfo.phoneNumber),
         })
     },
@@ -103,6 +105,7 @@ Page({
             });
             const tempUrlArr = tempFilePath.split('/');
             const tempFileName = tempUrlArr[tempUrlArr.length - 1];
+            uploadAvatar(tempFilePath)
             Toast({
                 context: this,
                 selector: '#t-toast',

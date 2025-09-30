@@ -51,9 +51,9 @@ export const genMockUsercenter = () => ({
     customerServiceInfo,
 });
 
-export function getUserInfo() {
+export async function getUserInfo() {
     const { getUserInfoApi } = require('../utils/api/user');
-    return getUserInfoApi();
+    return await getUserInfoApi();
 }
 
 export async function genUsercenter() {

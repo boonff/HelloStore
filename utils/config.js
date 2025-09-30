@@ -20,6 +20,7 @@ export const URL_API = {
     AuthRegister: `${BASE_URL}/auth/register`,
 
     UserInfo: `${BASE_URL}/user/info`,
+    UserAvatar: `${BASE_URL}/user/avatar`,
 
     AppConfig: `${BASE_URL}/api/config`,
     CustomerServiceConfig: `${BASE_URL}/api/config/customerService`

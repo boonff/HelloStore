@@ -1,4 +1,5 @@
 import { requestApi } from '../request.js'
+import { uploadApi } from '../request.js'
 import { URL_API } from '../config.js'
 
 export function getUserInfoApi() {
@@ -18,4 +19,12 @@ export function getUserInfoApi() {
         wx.showToast({ title: '网络错误', icon: 'error' })
         throw err
     })
+}
+
+export function uploadAvatarApi(filePath) {
+    return uploadApi({
+        url: URL_API.UserAvatar,
+        filePath,
+        name: 'file',
+    });
 }
