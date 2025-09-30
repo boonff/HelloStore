@@ -1,5 +1,5 @@
 import { requestApi } from '../request.js'
-import { uploadApi } from '../request.js'
+import { fileUpLoadApi } from '../request.js'
 import { URL_API } from '../config.js'
 
 export function getUserInfoApi() {
@@ -22,9 +22,28 @@ export function getUserInfoApi() {
 }
 
 export function uploadAvatarApi(filePath) {
-    return uploadApi({
+    return fileUpLoadApi({
         url: URL_API.UserAvatar,
         filePath,
         name: 'file',
     });
 }
+
+export function updateNickNameApi(nickName) {
+    return requestApi({
+        url: URL_API.UserNickName,
+        method: 'POST',
+        data: nickName,
+        header: { 'Content-Type': 'text/plain' }
+    })
+}
+
+export function updateGenderApi(gender) {
+    return requestApi({
+        url: URL_API.UserGender,
+        method: 'POST',
+        data: { gender }, // JSON
+        header: { 'Content-Type': 'application/json' }
+    })
+}
+

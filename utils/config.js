@@ -21,6 +21,8 @@ export const URL_API = {
 
     UserInfo: `${BASE_URL}/user/info`,
     UserAvatar: `${BASE_URL}/user/avatar`,
+    UserNickName: `${BASE_URL}/user/nickName`,
+    UserGender: `${BASE_URL}/user/gender`,
 
     AppConfig: `${BASE_URL}/api/config`,
     CustomerServiceConfig: `${BASE_URL}/api/config/customerService`

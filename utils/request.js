@@ -46,7 +46,7 @@ export function requestApi(options) {
  * @param {Object} [options.header={}] 自定义 header
  * @returns {Promise} 返回 Promise
  */
-export function uploadApi(options) {
+export function fileUpLoadApi(options) {
     return new Promise((resolve, reject) => {
         const token = wx.getStorageSync('token'); // 自动带 token
         console.log("uploadApi token:", token)

@@ -101,15 +101,36 @@ Page({
 
     onShow() {
         this.getTabBar().init();
-        this.init();
+        this.init(); // 拉取用户信息
+
+        const token = wx.getStorageSync('token');
+        if (!token) {
+            // 用户未登录，重置页面显示
+            this.setData({
+                userInfo: {
+                    avatarUrl: '',
+                    nickName: '未登录',
+                    phoneNumber: '',
+                },
+                orderTagInfos,
+                menuData,
+                customerServiceInfo: {},
+            });
+        }
     },
     onPullDownRefresh() {
         this.init();
     },
 
     init() {
-        this.fetUseriInfoHandle();
-    },
+        const token = wx.getStorageSync('token');
+        if (token) {
+            this.fetUseriInfoHandle(); // 已登录才拉取用户信息
+        } else {
+            console.log('用户未登录，不拉取信息');
+        }
+    }
+    ,
 
     fetUseriInfoHandle() {
         fetchUserCenter().then(({ userInfo, countsData, orderTagInfos: orderInfo, customerServiceInfo }) => {
@@ -215,13 +236,21 @@ Page({
     },
 
     gotoUserEditPage() {
-        const { currAuthStep } = this.data;
-        if (currAuthStep === 2) {
-            wx.navigateTo({ url: '/pages/user/person-info/index' });
+        const token = wx.getStorageSync('token'); // 获取本地 token
+
+        if (token) {
+            // 已登录，跳转到个人信息页
+            wx.navigateTo({
+                url: '/pages/user/person-info/index',
+            });
         } else {
-            this.fetUseriInfoHandle();
+            // 未登录，跳转到登录页
+            wx.navigateTo({
+                url: '/pages/auth/login/login',
+            });
         }
     },
+
 
     getVersionInfo() {
         const versionInfo = wx.getAccountInfoSync();

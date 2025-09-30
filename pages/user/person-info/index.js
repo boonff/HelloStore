@@ -1,8 +1,9 @@
 import { fetchPerson } from '../../../services/usercenter/fetchPerson';
 import { phoneEncryption } from '../../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
-import { uploadAvatar } from '../../../services/usercenter/uploadUserAvatar'
+import { uploadAvatar } from '../../../services/usercenter/uploadUser'
 import data from '../../../custom-tab-bar/data';
+import { updateGender } from '../../../services/usercenter/uploadUser';
 Page({
     data: {
         personInfo: {
@@ -68,8 +69,10 @@ Page({
             typeVisible: false,
         });
     },
-    onConfirm(e) {
+    async onConfirm(e) {
         const { value } = e.detail;
+
+        await updateGender(parseInt(value));
         this.setData(
             {
                 typeVisible: false,
@@ -122,4 +125,19 @@ Page({
             });
         }
     },
+
+    logOut() {
+        wx.removeStorageSync('token');
+        this.setData({
+            personInfo: {
+                avatarUrl: '',
+                nickName: '',
+                gender: 0,
+                phoneNumber: '',
+            }
+        });
+        wx.reLaunch({
+            url: '/pages/usercenter/index'
+        });
+    }
 });
