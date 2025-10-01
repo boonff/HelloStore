@@ -1,23 +1,12 @@
-import { config } from '../../config/index';
+import { getGoodDetail } from '../../model/goods';
+import { getSku } from '../../model/goods';
 
 /** 获取商品列表 */
-function mockFetchGood(ID = 0) {
-    const { delay } = require('../_utils/delay');
-    const { genGood } = require('../../model/good');
-    return delay().then(() => genGood(ID));
+export async function fetchGood(spuId) {
+    return await getGoodDetail(spuId)
 }
 
-function realFetchGood(ID = 0) {
-    const { getGoodDetail } = require('../../model/goods');
-    return getGoodDetail(ID);
-}
-
-/** 获取商品列表 */
-export function fetchGood(ID = 0) {
-    if (false) {
-        return mockFetchGood(ID);
-    }
-    return new Promise((resolve) => {
-        realFetchGood(ID).then(resolve)
-    });
+// 获取商品sku
+export async function fetchSku(spuId) {
+    return await getSku(spuId)
 }

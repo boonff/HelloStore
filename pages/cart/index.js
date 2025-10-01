@@ -43,9 +43,11 @@ Page({
                         // 库存为0（无货）的商品单独分组
                         if (goods.stockQuantity > 0) {
                             return true;
+                        } else {
+                            store.shortageGoodsList.push(goods);
+                            return false;
                         }
-                        store.shortageGoodsList.push(goods);
-                        return false;
+
                     });
 
                     if (activity.goodsPromotionList.length > 0) {

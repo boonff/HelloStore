@@ -12,9 +12,9 @@ export const URL_API = {
     RandomTopComments: `${BASE_URL}/comments/randomTopComments`,
     CommentsCount: `${BASE_URL}/comments/count`,
 
+    Goods: `${BASE_URL}/goods`,
     GoodsSearch: `${BASE_URL}/goods/search`,
     GoodsRange: `${BASE_URL}/goods/range`,
-    GoodsDetail: `${BASE_URL}/goods`,
 
     AuthLogin: `${BASE_URL}/auth/login`,
     AuthRegister: `${BASE_URL}/auth/register`,

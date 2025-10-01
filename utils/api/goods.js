@@ -50,7 +50,7 @@ export const getGoodsApi = (pageIndex = 0, pageSize = 0) => {
  */
 export const getGoodDetailApi = (spuId = 0) => {
     return requestApi({
-        url: `${URL_API.GoodsDetail}/${spuId}`,
+        url: `${URL_API.Goods}/${spuId}`,
         method: 'GET'
     }).then(res => {
         if (res && res.spuId) {
@@ -66,3 +66,12 @@ export const getGoodDetailApi = (spuId = 0) => {
         throw err
     })
 }
+
+// 获取商品 SKU
+export function getSkuApi(spuId) {
+    return requestApi({
+        url: `${URL_API.Goods}/${spuId}/skus`,
+        method: 'GET'
+    });
+}
+

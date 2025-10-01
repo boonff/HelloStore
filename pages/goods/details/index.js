@@ -1,5 +1,5 @@
 import Toast from 'tdesign-miniprogram/toast/index';
-import { fetchGood } from '../../../services/good/fetchGood';
+import { fetchGood, fetchSku } from '../../../services/good/fetchGood';
 import { fetchActivityList } from '../../../services/activity/fetchActivityList';
 import {
     getGoodsDetailsCommentList,
@@ -302,35 +302,30 @@ Page({
     },
 
     getDetail(spuId) {
-        Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
-            const [details, activityList] = res;
-            const skuArray = [];
-            const { skuList, primaryImage, isPutOnSale, minSalePrice, maxSalePrice, maxLinePrice, soldNum } = details;
-            skuList.forEach((item) => {
-                skuArray.push({
-                    skuId: item.skuId,
-                    quantity: item.stockInfo ? item.stockInfo.stockQuantity : 0,
-                    specInfo: item.specInfo,
-                });
-            });
-            const promotionArray = [];
-            activityList.forEach((item) => {
-                promotionArray.push({
-                    tag: item.promotionSubCode === 'MYJ' ? '满减' : '满折',
-                    label: '满100元减99.9元',
-                });
-            });
+        Promise.all([fetchGood(spuId), fetchSku(spuId), fetchActivityList()]).then((res) => {
+            const [goods, sku, activityList] = res;
+
+            const promotionArray = activityList.map((item) => ({
+                tag: item.promotionSubCode === 'MYJ' ? '满减' : '满折',
+                label: '满100元减99.9元',
+            }));
+
+            // 如果判断售罄，只要所有 SKU 库存都 <= 0
+            const totalStock = sku.reduce((sum, item) => sum + (item.stockInfo.stockQuantity || 0), 0);
+
+            const { primaryImage, minSalePrice, maxSalePrice, maxLinePrice, soldNum } = goods;
+
             this.setData({
-                details,
+                details: goods,
                 activityList,
-                isStock: details.spuStockQuantity > 0,
+                isStock: totalStock > 0,
                 maxSalePrice: maxSalePrice ? parseInt(maxSalePrice) : 0,
                 maxLinePrice: maxLinePrice ? parseInt(maxLinePrice) : 0,
                 minSalePrice: minSalePrice ? parseInt(minSalePrice) : 0,
                 list: promotionArray,
-                skuArray: skuArray,
+                skuArray: sku,  // 直接用后端返回的 skuList
                 primaryImage,
-                soldout: isPutOnSale === 0,
+                soldout: totalStock <= 0,
                 soldNum,
             });
         });
