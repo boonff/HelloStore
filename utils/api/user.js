@@ -7,7 +7,7 @@ export function getUserInfoApi() {
         url: URL_API.UserInfo,
         method: 'GET',
     }).then(res => {
-        if (res && res.id) {
+        if (res && res.username) {
             console.log('getUserInfoApi 请求成功:', res)
             return res
         } else {

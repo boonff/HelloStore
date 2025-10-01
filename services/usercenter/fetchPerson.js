@@ -26,10 +26,10 @@ export async function fetchPerson() {
     } else {
         const res = await getUserInfo()
         // 如果返回 null 或格式不对，返回默认对象
-        if (res && res.id) {
+        if (res && res.username) {
             return res
         } else {
-            console.warn('fetchPerson 返回数据无效:', res)
+            console.log('fetchPerson 返回数据无效:', res)
             return null
         }
     }
