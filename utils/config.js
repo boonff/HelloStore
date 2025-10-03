@@ -24,6 +24,8 @@ export const URL_API = {
     UserNickName: `${BASE_URL}/user/nickName`,
     UserGender: `${BASE_URL}/user/gender`,
 
+    Cart: `${BASE_URL}/cart`,
+
     AppConfig: `${BASE_URL}/api/config`,
     CustomerServiceConfig: `${BASE_URL}/api/config/customerService`
 }
