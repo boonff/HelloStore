@@ -22,11 +22,11 @@ export const CartApi = {
     /** 更新购物车中某个商品数量 */
     updateCartItem(skuId, count) {
         return requestApi({
-            url: `${URL_API.Cart}/update/${skuId}`,
-            method: 'PUT',
-            data: { count }
+            url: `${URL_API.Cart}/update/${skuId}?count=${count}`,
+            method: 'PUT'
         })
-    },
+    }
+    ,
 
     /** 删除购物车中的商品 */
     removeCartItem(skuId) {

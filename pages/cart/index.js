@@ -1,6 +1,7 @@
 import Dialog from 'tdesign-miniprogram/dialog/index';
 import Toast from 'tdesign-miniprogram/toast/index';
 import { fetchCartGroupData } from '../../services/cart/cart';
+import { onQuantityChange } from '../../services/cart/cart';
 Page({
     data: {
         cartGroupData: null,
@@ -77,7 +78,7 @@ Page({
         const { storeGoods } = this.data.cartGroupData;
         for (const store of storeGoods) {
             for (const activity of store.promotionGoodsList) {
-                for (const goods of activity.goodsPromotionList) {
+                for (const goods of activity.goods) {
                     if (goods.spuId === spuId && goods.skuId === skuId) {
                         currentStore = store;
                         currentActivity = currentActivity;
@@ -120,9 +121,9 @@ Page({
 
     // 加购数量变更
     // 注：实际场景时应该调用接口
-    changeQuantityService({ spuId, skuId, quantity }) {
+    async changeQuantityService({ spuId, skuId, quantity }) {
         this.findGoods(spuId, skuId).currentGoods.quantity = quantity;
-        return Promise.resolve();
+        return await onQuantityChange(spuId, skuId, quantity);
     },
 
     // 删除加购商品
@@ -191,6 +192,8 @@ Page({
             goods: { spuId, skuId },
             quantity,
         } = e.detail;
+
+        console.log("onQuantityChange：", `spuId: ${spuId}, skuId: ${skuId}`)
         const { currentGoods } = this.findGoods(spuId, skuId);
         const stockQuantity = currentGoods.stockQuantity > 0 ? currentGoods.stockQuantity : 0; // 避免后端返回的是-1
         // 加购数量超过库存数量
