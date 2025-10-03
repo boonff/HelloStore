@@ -11,7 +11,7 @@ Component({
             observer(storeGoods) {
                 for (const store of storeGoods) {
                     for (const activity of store.promotionGoodsList) {
-                        for (const goods of activity.goodsPromotionList) {
+                        for (const goods of activity.goods) {
                             goods.specs = goods.specInfo.map((item) => item.specValue); // 目前仅展示商品已选规格的值
                         }
                     }
