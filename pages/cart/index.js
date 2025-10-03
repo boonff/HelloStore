@@ -2,6 +2,8 @@ import Dialog from 'tdesign-miniprogram/dialog/index';
 import Toast from 'tdesign-miniprogram/toast/index';
 import { fetchCartGroupData } from '../../services/cart/cart';
 import { onQuantityChange } from '../../services/cart/cart';
+import { selectGoods } from '../../services/cart/cart';
+
 Page({
     data: {
         cartGroupData: null,
@@ -102,8 +104,8 @@ Page({
     // 选择单个商品
     // 注：实际场景时应该调用接口更改选中状态
     selectGoodsService({ spuId, skuId, isSelected }) {
-        this.findGoods(spuId, skuId).currentGoods.isSelected = isSelected;
-        return Promise.resolve();
+        //this.findGoods(spuId, skuId).currentGoods.isSelected = isSelected;
+        return selectGoods(spuId, skuId, isSelected);
     },
 
     // 全选门店
@@ -112,7 +114,7 @@ Page({
         const currentStore = this.data.cartGroupData.storeGoods.find((s) => s.storeId === storeId);
         currentStore.isSelected = isSelected;
         currentStore.promotionGoodsList.forEach((activity) => {
-            activity.goodsPromotionList.forEach((goods) => {
+            activity.goods.forEach((goods) => {
                 goods.isSelected = isSelected;
             });
         });
@@ -122,7 +124,7 @@ Page({
     // 加购数量变更
     // 注：实际场景时应该调用接口
     async changeQuantityService({ spuId, skuId, quantity }) {
-        this.findGoods(spuId, skuId).currentGoods.quantity = quantity;
+        // this.findGoods(spuId, skuId).currentGoods.quantity = quantity;
         return await onQuantityChange(spuId, skuId, quantity);
     },
 
@@ -142,7 +144,7 @@ Page({
         const { storeGoods, invalidGoodItems } = this.data.cartGroupData;
         for (const store of storeGoods) {
             for (const activity of store.promotionGoodsList) {
-                if (deleteGoods(activity.goodsPromotionList) > -1) {
+                if (deleteGoods(activity.goods) > -1) {
                     return Promise.resolve();
                 }
             }
@@ -276,7 +278,7 @@ Page({
         const goodsRequestList = [];
         this.data.cartGroupData.storeGoods.forEach((store) => {
             store.promotionGoodsList.forEach((promotion) => {
-                promotion.goodsPromotionList.forEach((m) => {
+                promotion.goods.forEach((m) => {
                     if (m.isSelected == 1) {
                         goodsRequestList.push(m);
                     }

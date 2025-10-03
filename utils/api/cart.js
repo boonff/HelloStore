@@ -10,6 +10,14 @@ export const CartApi = {
         })
     },
 
+    /** 选择/取消选择单个商品 **/
+    selectCartItem(skuId, isSelected) {
+        return requestApi({
+            url: `${URL_API.Cart}/select/${skuId}?isSelected=${isSelected}`,
+            method: 'PUT'
+        })
+    },
+
     /** 添加商品到购物车 */
     addCartItem(cartItem) {
         return requestApi({

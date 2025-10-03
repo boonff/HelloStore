@@ -15,6 +15,15 @@ export async function fetchCartGroupData() {
     return await CartApi.getCart()
 }
 
+/** 选择/取消选择单个商品 **/
+export async function selectGoods(spuId, skuId, isSelected) {
+    // 如果传的是 0/1，转换为布尔值
+    const selected = isSelected === 1 || isSelected === true
+    await CartApi.selectCartItem(skuId, selected)
+}
+
+
+/** 更新购物车中某个商品数量 */
 export async function onQuantityChange(spuId, skuId, quantity) {
     await CartApi.updateCartItem(skuId, quantity)
 }
