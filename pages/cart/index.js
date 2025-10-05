@@ -1,8 +1,9 @@
 import Dialog from 'tdesign-miniprogram/dialog/index';
 import Toast from 'tdesign-miniprogram/toast/index';
-import { fetchCartGroupData } from '../../services/cart/cart';
+import { fetchCartGroupData, selectStoreGoods } from '../../services/cart/cart';
 import { onQuantityChange } from '../../services/cart/cart';
 import { selectGoods } from '../../services/cart/cart';
+import { selectAllGoods } from '../../services/cart/cart';
 
 Page({
     data: {
@@ -102,33 +103,21 @@ Page({
     },
 
     // 选择单个商品
-    // 注：实际场景时应该调用接口更改选中状态
-    selectGoodsService({ spuId, skuId, isSelected }) {
-        //this.findGoods(spuId, skuId).currentGoods.isSelected = isSelected;
-        return selectGoods(spuId, skuId, isSelected);
+    async selectGoodsService({ spuId, skuId, isSelected }) {
+        return await selectGoods(spuId, skuId, isSelected);
     },
 
     // 全选门店
-    // 注：实际场景时应该调用接口更改选中状态
-    selectStoreService({ storeId, isSelected }) {
-        const currentStore = this.data.cartGroupData.storeGoods.find((s) => s.storeId === storeId);
-        currentStore.isSelected = isSelected;
-        currentStore.promotionGoodsList.forEach((activity) => {
-            activity.goods.forEach((goods) => {
-                goods.isSelected = isSelected;
-            });
-        });
-        return Promise.resolve();
+    async selectStoreService({ storeId, isSelected }) {
+        await selectStoreGoods(storeId, isSelected)
     },
 
     // 加购数量变更
-    // 注：实际场景时应该调用接口
     async changeQuantityService({ spuId, skuId, quantity }) {
-        // this.findGoods(spuId, skuId).currentGoods.quantity = quantity;
         return await onQuantityChange(spuId, skuId, quantity);
     },
 
-    // 删除加购商品
+    // TODO 删除加购商品
     // 注：实际场景时应该调用接口
     deleteGoodsService({ spuId, skuId }) {
         function deleteGoods(group) {
@@ -158,7 +147,7 @@ Page({
         return Promise.reject();
     },
 
-    // 清空失效商品
+    // TODO 清空失效商品
     // 注：实际场景时应该调用接口
     clearInvalidGoodsService() {
         this.data.cartGroupData.invalidGoodItems = [];

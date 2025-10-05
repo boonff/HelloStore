@@ -21,9 +21,21 @@ export async function selectGoods(spuId, skuId, isSelected) {
     const selected = isSelected === 1 || isSelected === true
     await CartApi.selectCartItem(skuId, selected)
 }
+export async function selectStoreGoods(storeId, isSelected) {
+    const selected = isSelected === 1 || isSelected === true
+    await CartApi.selectStoreCartItem(storeId, selected)
+}
+
+/** 全选/取消全选购物车 **/
+export async function selectAllGoods(isSelected) {
+    const selected = isSelected === 1 || isSelected === true
+    await CartApi.selectAllCartItem(isSelected)
+}
 
 
 /** 更新购物车中某个商品数量 */
 export async function onQuantityChange(spuId, skuId, quantity) {
     await CartApi.updateCartItem(skuId, quantity)
 }
+
+

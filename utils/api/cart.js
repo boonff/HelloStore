@@ -13,7 +13,24 @@ export const CartApi = {
     /** 选择/取消选择单个商品 **/
     selectCartItem(skuId, isSelected) {
         return requestApi({
-            url: `${URL_API.Cart}/select/${skuId}?isSelected=${isSelected}`,
+            url: `${URL_API.Cart}/select/${skuId}`,
+            method: 'PUT'
+        })
+    },
+
+    /** 全选/取消商店 **/
+    selectStoreCartItem(storeId, isSelected) {
+        return requestApi({
+            url: `${URL_API.Cart}/select/store/${storeId}?isSelected=${isSelected}`,
+            method: 'PUT'
+        })
+    },
+
+
+    /** 全选/取消全选购物车 **/
+    selectAllCartItem(isSelected) {
+        return requestApi({
+            url: `${URL_API.Cart}/select/all?isSelected=${isSelected}`,
             method: 'PUT'
         })
     },
