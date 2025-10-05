@@ -33,8 +33,7 @@ export function registerApi(
 
 export function checkTokenValid() {
     return requestApi({
-        url: `${URL_API.AppConfig}/verify`,
-        method: 'POST'
+        url: `${URL_API.Auth}/verify`,
     }).then(valid => {
         if (!valid) {
             wx.removeStorageSync('token');

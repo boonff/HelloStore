@@ -32,7 +32,6 @@ export const getGoodsApi = (pageIndex = 0, pageSize = 0) => {
         method: 'GET'
     }).then(res => {
         if (Array.isArray(res)) {
-            console.log('getGoods 请求成功:', res)
             return res
         } else {
             console.warn('getGoods 返回的数据不是数组:', res)

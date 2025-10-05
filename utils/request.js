@@ -10,7 +10,6 @@
 export function requestApi(options) {
     return new Promise((resolve, reject) => {
         const token = wx.getStorageSync('token'); // 自动带 token
-        console.log("requestApi token:", token)
         console.log('Request Options:', options); // 调试日志
         wx.request({
             url: options.url,
@@ -49,7 +48,6 @@ export function requestApi(options) {
 export function fileUpLoadApi(options) {
     return new Promise((resolve, reject) => {
         const token = wx.getStorageSync('token'); // 自动带 token
-        console.log("uploadApi token:", token)
         wx.uploadFile({
             url: options.url,
             filePath: options.filePath,
