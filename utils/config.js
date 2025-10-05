@@ -16,6 +16,7 @@ export const URL_API = {
     GoodsSearch: `${BASE_URL}/goods/search`,
     GoodsRange: `${BASE_URL}/goods/range`,
 
+    Auth: `${BASE_URL}/auth`,
     AuthLogin: `${BASE_URL}/auth/login`,
     AuthRegister: `${BASE_URL}/auth/register`,
 

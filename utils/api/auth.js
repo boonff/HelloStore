@@ -30,3 +30,19 @@ export function registerApi(
         return token
     })
 }
+
+export function checkTokenValid() {
+    return requestApi({
+        url: `${URL_API.AppConfig}/verify`,
+        method: 'POST'
+    }).then(valid => {
+        if (!valid) {
+            wx.removeStorageSync('token');
+            throw new Error('Token 已失效');
+        }
+    }).catch(err => {
+        wx.removeStorageSync('token');
+        throw new Error('Token 验证失败');
+    });
+}
+
