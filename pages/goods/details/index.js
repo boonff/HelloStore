@@ -198,7 +198,7 @@ Page({
     normalizeSkuTree(skuTree) {
         const normalizedTree = {};
         skuTree.forEach((treeItem) => {
-            normalizedTree[treeItem.specId] = treeItem.specValueList;
+            normalizedTree[treeItem.specId] = treeItem.values;
         });
         return normalizedTree;
     },
@@ -249,7 +249,7 @@ Page({
             price: this.data.details.minSalePrice,
             specInfo: this.data.details.specList?.map((item) => ({
                 specTitle: item.title,
-                specValue: item.specValueList[0].specValue,
+                specValue: item.values[0].specValue,
             })),
             primaryImage: this.data.details.primaryImage,
             spuId: this.data.details.spuId,
@@ -301,17 +301,19 @@ Page({
         });
     },
 
-    getDetail(spuId) {
-        Promise.all([fetchGood(spuId), fetchSku(spuId), fetchActivityList()]).then((res) => {
-            const [goods, sku, activityList] = res;
 
+    getDetail(spuId) {
+        // TODO 改为使用GoodsDTO获取数据
+        Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
+            const [goods, activityList] = res;
+            console.log("goods:", goods)
             const promotionArray = activityList.map((item) => ({
                 tag: item.promotionSubCode === 'MYJ' ? '满减' : '满折',
                 label: '满100元减99.9元',
             }));
 
             // 如果判断售罄，只要所有 SKU 库存都 <= 0
-            const totalStock = sku.reduce((sum, item) => sum + (item.stockInfo.stockQuantity || 0), 0);
+            const totalStock = goods.skuList.reduce((sum, item) => sum + (item.stockInfo.stockQuantity || 0), 0);
 
             const { primaryImage, minSalePrice, maxSalePrice, maxLinePrice, soldNum } = goods;
 
@@ -323,7 +325,7 @@ Page({
                 maxLinePrice: maxLinePrice ? parseInt(maxLinePrice) : 0,
                 minSalePrice: minSalePrice ? parseInt(minSalePrice) : 0,
                 list: promotionArray,
-                skuArray: sku,  // 直接用后端返回的 skuList
+                skuArray: goods.skuList,  // 直接用后端返回的 skuList
                 primaryImage,
                 soldout: totalStock <= 0,
                 soldNum,
