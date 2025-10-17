@@ -38,4 +38,18 @@ export async function onQuantityChange(spuId, skuId, quantity) {
     await CartApi.updateCartItem(skuId, quantity)
 }
 
+export async function addCartItem(storeId, spuId, skuId, buyNum, price, title, primaryImage) {
+    const cartItem = {
+        storeId,
+        spuId,
+        skuId,
+        count: buyNum,
+        price: price || 0,
+        title,
+        primaryImage,
+        isSelected: true
+    };
+    console.log('Final cartItem to send:', cartItem);
+    await CartApi.addCartItem(cartItem);
+}
 

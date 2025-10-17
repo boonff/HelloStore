@@ -7,6 +7,7 @@ import {
 } from '../../../services/good/fetchGoodsDetailsComments';
 
 import { cdnBase } from '../../../config/index';
+import { addCartItem } from '../../../services/cart/cart';
 
 const imgPrefix = `${cdnBase}/`;
 
@@ -80,6 +81,7 @@ Page({
         maxSalePrice: 0,
         list: [],
         spuId: '',
+        storeId: '',
         navigation: { type: 'fraction' },
         current: 0,
         autoplay: true,
@@ -134,6 +136,7 @@ Page({
     chooseSpecItem(e) {
         const { specList } = this.data.details;
         const { selectedSku, isAllSelectedSku } = e.detail;
+        console.log("chooseSpecItem: ", selectedSku)
         if (!isAllSelectedSku) {
             this.setData({
                 selectSkuSellsPrice: 0,
@@ -153,10 +156,11 @@ Page({
             selectedAttrStr += `，${item.specValue}  `;
         });
         // eslint-disable-next-line array-callback-return
-        const skuItem = skuArray.filter((item) => {
+        const skuItem = skuArray.find((item) => {
             let status = true;
             (item.specInfo || []).forEach((subItem) => {
                 if (!selectedSku[subItem.specId] || selectedSku[subItem.specId] !== subItem.specValueId) {
+                    console.log("subItem: ", !selectedSku[subItem.specId])
                     status = false;
                 }
             });
@@ -215,12 +219,22 @@ Page({
         }
     },
 
-    addCart() {
+    async addCart() {
         const { isAllSelectedSku } = this.data;
+        console.log("send message:", this.data.spuId)
+        await addCartItem(
+            this.data.storeId,
+            this.data.spuId,
+            this.data.selectItem.skuId,
+            this.data.buyNum,
+            this.data.selectSkuSellsPrice,
+            this.data.details.title,
+            this.data.details.primaryImage
+        )
         Toast({
             context: this,
             selector: '#t-toast',
-            message: isAllSelectedSku ? '点击加入购物车' : '请选择规格',
+            message: isAllSelectedSku ? '已加入购物车' : '请选择规格',
             icon: '',
             duration: 1000,
         });
@@ -253,8 +267,8 @@ Page({
             })),
             primaryImage: this.data.details.primaryImage,
             spuId: this.data.details.spuId,
-            thumb: this.data.details.primaryImage,
-            title: this.data.details.title,
+            thumb: this.data.primaryImage,
+            title: this.data.title,
         };
         let urlQueryStr = obj2Params({
             goodsRequestList: JSON.stringify([query]),
@@ -325,6 +339,7 @@ Page({
                 maxLinePrice: maxLinePrice ? parseInt(maxLinePrice) : 0,
                 minSalePrice: minSalePrice ? parseInt(minSalePrice) : 0,
                 list: promotionArray,
+                storeId: goods.storeId,
                 skuArray: goods.skuList,  // 直接用后端返回的 skuList
                 primaryImage,
                 soldout: totalStock <= 0,
