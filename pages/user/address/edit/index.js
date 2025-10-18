@@ -44,6 +44,7 @@ Page({
     labelValue: '',
     columns: 3,
   },
+  hasSava: false,
   privateData: {
     verifyTips: '',
   },
@@ -51,15 +52,11 @@ Page({
     const { id } = options;
     this.init(id);
   },
-
   onUnload() {
     if (!this.hasSava) {
       rejectAddress();
     }
   },
-
-  hasSava: false,
-
   init(id) {
     if (id) {
       this.getAddressDetail(Number(id));
@@ -333,7 +330,7 @@ Page({
       longitude: locationState.longitude,
       storeId: null,
     });
-
+    //TODO 写一个后端保存地址，并且返回结算页面
     wx.navigateBack({ delta: 1 });
   },
 
