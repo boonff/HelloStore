@@ -1,31 +1,19 @@
-let addressPromise = [];
+let addressResolvers = [];
 
-/** 获取一个地址选择Promise */
-export const getAddressPromise = () => {
-  let resolver;
-  let rejecter;
-  const nextPromise = new Promise((resolve, reject) => {
-    resolver = resolve;
-    rejecter = reject;
+/** 获取一个地址选择 Promise */
+export const getAddressPromise = () =>
+  new Promise((resolve, reject) => {
+    addressResolvers.push({ resolve, reject });
   });
-
-  addressPromise.push({ resolver, rejecter });
-
-  return nextPromise;
-};
 
 /** 用户选择了一个地址 */
 export const resolveAddress = (address) => {
-  const allAddress = [...addressPromise];
-  addressPromise = [];
-
-  allAddress.forEach(({ resolver }) => resolver(address));
+  addressResolvers.forEach(({ resolve }) => resolve(address));
+  addressResolvers = [];
 };
 
-/** 用户没有选择任何地址只是返回上一页了 */
+/** 用户取消选择 */
 export const rejectAddress = () => {
-  const allAddress = [...addressPromise];
-  addressPromise = [];
-
-  allAddress.forEach(({ rejecter }) => rejecter(new Error('cancel')));
+  addressResolvers.forEach(({ reject }) => reject(new Error('cancel')));
+  addressResolvers = [];
 };
