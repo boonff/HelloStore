@@ -3,7 +3,7 @@ import { phoneRegCheck } from '../../../../utils/util';
 import Toast from 'tdesign-miniprogram/toast/index';
 import { addressParse } from '../../../../utils/addressParse';
 import { resolveAddress, rejectAddress } from '../../../../services/address/list';
-
+import { createDeliveryAddress } from '../../../../services/address/address';
 Component({
   externalClasses: ['t-class'],
   properties: {
@@ -69,6 +69,7 @@ Component({
               });
               if (this.properties.isOrderSure) {
                 this.onHandleSubmit(params);
+                createDeliveryAddress(params)
               } else if (this.properties.navigateUrl != '') {
                 const { navigateEvent } = this.properties;
                 this.triggerEvent('navigate');

@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { fetchDeliveryAddressList } from '../../../../services/address/fetchAddress';
+import { fetchDeliveryAddressList } from '../../../../services/address/address';
 import Toast from 'tdesign-miniprogram/toast/index';
 import { resolveAddress, rejectAddress } from '../../../../services/address/list';
-import { getAddressPromise } from '../../../../services/address/edit';
+import { getAddressPromise } from '../../../../services/address/list';
 
 Page({
   data: {

@@ -1,4 +1,5 @@
 import { config } from '../../config/index';
+import { AddressApi } from '../../utils/api/address';
 
 /** 获取收货地址 */
 function mockFetchDeliveryAddress(id) {
@@ -38,11 +39,9 @@ function mockFetchDeliveryAddressList(len = 0) {
 
 /** 获取收货地址列表 */
 export function fetchDeliveryAddressList(len = 10) {
-  if (config.useMock) {
-    return mockFetchDeliveryAddressList(len);
-  }
+  return AddressApi.getAddress()
+}
 
-  return new Promise((resolve) => {
-    resolve('real api');
-  });
+export function createDeliveryAddress(address) {
+  AddressApi.createAddress(address)
 }

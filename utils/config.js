@@ -27,6 +27,8 @@ export const URL_API = {
 
     Cart: `${BASE_URL}/cart`,
 
+    Address: `${BASE_URL}/address`,
+
     AppConfig: `${BASE_URL}/api/config`,
     CustomerServiceConfig: `${BASE_URL}/api/config/customerService`
 }

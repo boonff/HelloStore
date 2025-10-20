@@ -1,7 +1,8 @@
 import Toast from 'tdesign-miniprogram/toast/index';
-import { fetchDeliveryAddress } from '../../../../services/address/fetchAddress';
+import { fetchDeliveryAddress } from '../../../../services/address/address';
 import { areaData } from '../../../../config/index';
 import { resolveAddress, rejectAddress } from '../../../../services/address/list';
+import { createDeliveryAddress } from '../../../../services/address/address';
 
 const innerPhoneReg = '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
 const innerNameReg = '^[a-zA-Z\\d\\u4e00-\\u9fa5]+$';
@@ -306,8 +307,7 @@ Page({
     const { locationState } = this.data;
 
     this.hasSava = true;
-
-    resolveAddress({
+    const address = {
       saasId: '88888888',
       uid: `88888888205500`,
       authToken: null,
@@ -329,8 +329,10 @@ Page({
       latitude: locationState.latitude,
       longitude: locationState.longitude,
       storeId: null,
-    });
+    }
+    resolveAddress(address);
     //TODO 写一个后端保存地址，并且返回结算页面
+    createDeliveryAddress(address)
     wx.navigateBack({ delta: 1 });
   },
 
