@@ -1,3 +1,5 @@
+import { CouponApi } from "./api/coupon"
+
 const ENV = 'dev'
 
 const BASE_URLS = {
@@ -28,6 +30,8 @@ export const URL_API = {
     Cart: `${BASE_URL}/cart`,
 
     Address: `${BASE_URL}/address`,
+
+    CouponApi: `${BASE_URL}/coupon`,
 
     AppConfig: `${BASE_URL}/api/config`,
     CustomerServiceConfig: `${BASE_URL}/api/config/customerService`

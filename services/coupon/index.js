@@ -1,4 +1,5 @@
 import { config } from '../../config/index';
+import { CouponApi } from '../../utils/api/coupon';
 
 /** 获取优惠券列表 */
 function mockFetchCoupon(status) {
@@ -9,12 +10,7 @@ function mockFetchCoupon(status) {
 
 /** 获取优惠券列表 */
 export function fetchCouponList(status = 'default') {
-    if (config.useMock) {
-        return mockFetchCoupon(status);
-    }
-    return new Promise((resolve) => {
-        resolve('real api');
-    });
+    return CouponApi.getUserCoupon(status)
 }
 
 /** 获取优惠券 详情 */
