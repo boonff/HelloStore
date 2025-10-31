@@ -16,5 +16,4 @@ TDesign 零售行业小程序是一款基于 TDesign 企业级设计体系搭建
    npm install
 
 ## [后端项目]([https://github.com/boonff/hello-store-service.git])
- 商家客户端
 ## [商家客户端项目]([https://github.com/boonff/hello-commerce.git])
